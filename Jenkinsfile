@@ -26,6 +26,7 @@ pipeline {
         withCredentials([string(credentialsId: 'snyk-token', variable: 'snyk-token')]) {
           script {
             try {
+              sh("snyk auth")
               sh("snyk container test shameem2001/devsecops-build")
             } catch (err) {
               echo err.getMessage()
@@ -49,7 +50,7 @@ pipeline {
 
     stage('checkov') {
       steps {
-        sh("checkov -s -f main.tf")
+        sh("/home/shameem/.local/bin/checkov -s -f main.tf")
       }
     }
 
