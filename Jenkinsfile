@@ -8,13 +8,13 @@ pipeline {
     stage('CompileandRunSonarAnalysis') {
       steps {
         withCredentials([string(credentialsId: 'Sonar-Token', variable: 'Sonar-Token')]) {
-          sh("mvn -Dmaven.test.failure.ignore verify sonar:sonar -Dsonar.login=${Sonar-Token} -Dsonar.projectKey=easybuggy -Dsonar.host.url=http://localhost:9000/")
+          sh("mvn -Dmaven.test.failure.ignore verify sonar:sonar -Dsonar.login=${Sonar-Token} -Dsonar.projectKey=devsecops-ci -Dsonar.host.url=http://localhost:9000/")
         }
       }
     }
     stage('Build') {
       steps {
-        withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
+        withDockerRegistry([credentialsId: "dockerhub-credentials", url: ""]) {
           script {
             app = docker.build("shameem2001/devsecops-build")
           }
@@ -23,7 +23,7 @@ pipeline {
     }
     stage('RunContainerScan') {
       steps {
-        withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+        withCredentials([string(credentialsId: 'snyk-token', variable: 'snyk-token')]) {
           script {
             try {
               sh("snyk container test shameem2001/devsecops-build")
@@ -36,7 +36,7 @@ pipeline {
     }
     stage('RunSnykSCA') {
       steps {
-        withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
+        withCredentials([string(credentialsId: 'snyk-token', variable: 'snyk-token')]) {
           sh("mvn snyk:test -fn")
         }
       }
