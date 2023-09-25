@@ -50,7 +50,7 @@ pipeline {
 
     stage('checkov') {
       steps {
-        sh("/home/shameem/.local/bin/checkov -s -f main.tf")
+        sh("~/checkov -s -f main.tf")
       }
     }
 
