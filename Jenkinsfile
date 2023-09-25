@@ -7,8 +7,8 @@ pipeline {
   stages {
     stage('CompileandRunSonarAnalysis') {
       steps {
-        withCredentials([string(credentialsId: 'Sonar-Token', variable: 'Sonar-Token')]) {
-          sh("mvn -Dmaven.test.failure.ignore verify sonar:sonar -Dsonar.login=${Sonar-Token} -Dsonar.projectKey=devsecops-ci -Dsonar.host.url=http://localhost:9000/")
+        withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
+          sh("mvn -Dmaven.test.failure.ignore verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=devsecops-ci -Dsonar.host.url=http://localhost:9000/")
         }
       }
     }
