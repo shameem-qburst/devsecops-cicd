@@ -51,7 +51,7 @@ pipeline {
     stage('checkov') {
       steps {
         sh('pip install checkov')
-        sh('/var/lib/jenkins/.local/bin/checkov -f main.tf')
+        sh('/var/lib/jenkins/.local/bin/checkov -s -f main.tf')
       }
     }
 
