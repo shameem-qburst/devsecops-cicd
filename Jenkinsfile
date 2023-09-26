@@ -50,8 +50,8 @@ pipeline {
 
     stage('checkov') {
       steps {
-        sh('pip install checkov')
-        sh('/var/lib/jenkins/.local/bin/checkov -s -f main.tf')
+        // sh('pip install checkov')
+        sh('/var/lib/jenkins/.local/bin/checkov -s -f main.tf | tee /home/shameem/Training/DevSecOps/checkov-analysis.txt')
       }
     }
 
