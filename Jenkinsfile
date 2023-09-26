@@ -50,7 +50,7 @@ pipeline {
 
     stage('checkov') {
       steps {
-        sh('echo "Admin@2175" | sudo -S /home/shameem/.local/bin/checkov -s -f main.tf')
+        sh('/home/shameem/.local/bin/checkov -s -f main.tf')
       }
     }
 
