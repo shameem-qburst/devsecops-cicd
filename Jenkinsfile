@@ -50,9 +50,8 @@ pipeline {
 
     stage('checkov') {
       steps {
-        sh("""
-                echo \$SYS_PASS | sudo -S /home/shameem/.local/bin/checkov -f main.tf
-          """)
+        sh('pip install checkov')
+        sh('checkov -f main.tf')
       }
     }
 
