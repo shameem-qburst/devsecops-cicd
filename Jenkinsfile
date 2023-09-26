@@ -50,8 +50,7 @@ pipeline {
 
     stage('checkov') {
       steps {
-        sh('sudo su shameem -S $SYS_PASS')
-        sh("/home/shameem/.local/bin/checkov -s -f main.tf")
+        sh('echo $SYS_PASS | sudo -S /home/shameem/.local/bin/checkov -s -f main.tf')
       }
     }
 
