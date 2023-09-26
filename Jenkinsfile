@@ -23,10 +23,10 @@ pipeline {
     }
     stage('RunContainerScan') {
       steps {
-        withCredentials([string(credentialsId: 'snyk-token', variable: 'snyk-token')]) {
+        withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
           script {
             try {
-              sh("snyk auth")
+              sh('snyk auth $SNYK_TOKEN')
               sh("snyk container test shameem2001/devsecops-build")
             } catch (err) {
               echo err.getMessage()
@@ -37,7 +37,7 @@ pipeline {
     }
     stage('RunSnykSCA') {
       steps {
-        withCredentials([string(credentialsId: 'snyk-token', variable: 'snyk-token')]) {
+        withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
           sh("mvn snyk:test -fn")
         }
       }
@@ -50,7 +50,7 @@ pipeline {
 
     stage('checkov') {
       steps {
-        sh("/home/shameem/.local/bin/checkov -s -f main.tf")
+        sh("~/checkov -s -f main.tf")
       }
     }
 
